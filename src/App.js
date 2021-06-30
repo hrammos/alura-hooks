@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import "./App.css";
-import FormularioCadastro from "./components/FormularioCadastro/FormularioCadastro";
-import 'fontsource-roboto';
+import React, { Component } from 'react'
+import './App.css'
+import { FormularioCadastro } from './components/FormularioCadastro/FormularioCadastro'
+import 'fontsource-roboto'
 
-import {Container, Typography } from "@material-ui/core"
+import {Container, Typography } from '@material-ui/core'
 class App extends Component {
   render() {
     return (
@@ -11,12 +11,12 @@ class App extends Component {
         <Typography variant="h3" component="h1" align="center" >Formulário de cadastro</Typography>
         <FormularioCadastro aoEnviar={aoEnviarForm} validarCPF={validarCPF} />
       </Container>
-    );
+    )
   }
 }
 
 function aoEnviarForm(dados){
-  console.log(dados);
+  console.log(dados)
 }
 
 function validarCPF(cpf){
@@ -27,4 +27,4 @@ function validarCPF(cpf){
   }
 }
 
-export default App;
+export default App
