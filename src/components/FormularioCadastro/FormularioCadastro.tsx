@@ -5,16 +5,18 @@ import { DadosEntrega } from './DadosEntrega'
 import { Typography } from '@material-ui/core'
 
 export const FormularioCadastro = ({ aoEnviar, validarCPF }) => {
-  const [etapaAtual, setEtapaAtual] = useState(1)
+  const [etapaAtual, setEtapaAtual] = useState(0)
+
+  const proximaEtapa = () => setEtapaAtual(etapaAtual + 1)
 
   const formularioAtual = (etapa: number) => {
     switch (etapa) {
       case 0:
-        return <DadosUsuario />
+        return <DadosUsuario aoEnviar={proximaEtapa} />
       
       case 1:
         return <DadosPessoais 
-          aoEnviar={aoEnviar} 
+          aoEnviar={proximaEtapa} 
           validarCPF={validarCPF}
         />
       
