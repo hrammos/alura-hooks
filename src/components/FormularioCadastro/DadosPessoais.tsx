@@ -7,12 +7,18 @@ export const DadosPessoais = ({ aoEnviar, validarCPF }) => {
   const [cpf, setCpf] = useState('')
   const [promocoes, setPromocoes] = useState(true)
   const [novidades, setNovidades] = useState(false)
-  const [erros, setErros] = useState({cpf:{valido:true, texto:''}})
+  const [erros, setErros] = useState({ cpf: { valido: true, texto: '' } })
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault()
-        aoEnviar({nome, sobrenome, cpf, novidades, promocoes})
+        aoEnviar({
+          nome, 
+          sobrenome, 
+          cpf, 
+          novidades, 
+          promocoes,
+        })
       }}
     >
       <TextField
@@ -26,6 +32,7 @@ export const DadosPessoais = ({ aoEnviar, validarCPF }) => {
         margin="normal"
         fullWidth
       />
+      
       <TextField
         value={sobrenome}
         onChange={(event) => {
@@ -37,6 +44,7 @@ export const DadosPessoais = ({ aoEnviar, validarCPF }) => {
         margin="normal"
         fullWidth
       />
+      
       <TextField
         value={cpf}
         onChange={(event) => {
@@ -45,8 +53,9 @@ export const DadosPessoais = ({ aoEnviar, validarCPF }) => {
 
         onBlur={(event)=>{
           const ehValido = validarCPF(cpf)
-          setErros({cpf:ehValido})
+          setErros({ cpf: ehValido })
         }}
+
         error={!erros.cpf.valido}
         helperText={erros.cpf.texto}
         id="CPF"
