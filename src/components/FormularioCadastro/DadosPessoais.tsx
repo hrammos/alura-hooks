@@ -1,13 +1,24 @@
 import React, { useState } from 'react'
 import { TextField, Button, Switch, FormControlLabel } from '@material-ui/core'
 
-export const DadosPessoais = ({ aoEnviar, validarCPF }) => {
+export const DadosPessoais = ({ aoEnviar, validacoes }) => {
   const [nome, setNome] = useState('')
   const [sobrenome, setSobrenome] = useState('')
   const [cpf, setCpf] = useState('')
   const [promocoes, setPromocoes] = useState(true)
   const [novidades, setNovidades] = useState(false)
   const [erros, setErros] = useState({ cpf: { valido: true, texto: '' } })
+  
+  const onBlurValidateFields = (event) => {
+    const { name, value } = event.target
+
+    const newErrors = {...erros }
+
+    newErrors[name] = validacoes[name](value)
+    
+    setErros(newErrors)
+  }
+  
   return (
     <form
       onSubmit={(event) => {
@@ -27,6 +38,7 @@ export const DadosPessoais = ({ aoEnviar, validarCPF }) => {
           setNome(event.target.value)
         }}
         id="nome"
+        name="nome"
         label="Nome"
         variant="outlined"
         margin="normal"
@@ -39,6 +51,7 @@ export const DadosPessoais = ({ aoEnviar, validarCPF }) => {
           setSobrenome(event.target.value)
         }}
         id="sobrenome"
+        name="sobrenome"
         label="Sobrenome"
         variant="outlined"
         margin="normal"
@@ -51,14 +64,11 @@ export const DadosPessoais = ({ aoEnviar, validarCPF }) => {
           setCpf(event.target.value)
         }}
 
-        onBlur={(event)=>{
-          const ehValido = validarCPF(cpf)
-          setErros({ cpf: ehValido })
-        }}
-
+        onBlur={onBlurValidateFields}
         error={!erros.cpf.valido}
         helperText={erros.cpf.texto}
-        id="CPF"
+        id="cpf"
+        name="cpf"
         label="CPF"
         variant="outlined"
         margin="normal"

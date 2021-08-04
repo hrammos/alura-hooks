@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { TextField, Button } from '@material-ui/core'
 
-export const DadosEntrega = ({ aoEnviar }) => {
+export const DadosEntrega = ({ aoEnviar, validacoes }) => {
   const [cep, setCep] = useState('')
   const [endereco, setEndereco] = useState('')
   const [numero, setNumero] = useState('')
@@ -21,6 +21,7 @@ export const DadosEntrega = ({ aoEnviar }) => {
     }}>
       <TextField 
         id="cep" 
+        name="cep" 
         label="CEP" 
         type="text"
         value={cep}
@@ -33,6 +34,7 @@ export const DadosEntrega = ({ aoEnviar }) => {
       
       <TextField 
         id="endereco" 
+        name="endereco" 
         label="Endereço" 
         type="text"
         value={endereco}
@@ -46,6 +48,7 @@ export const DadosEntrega = ({ aoEnviar }) => {
 
       <TextField 
         id="numero" 
+        name="numero" 
         label="Número" 
         type="number"
         value={numero}
@@ -58,6 +61,7 @@ export const DadosEntrega = ({ aoEnviar }) => {
 
       <TextField 
         id="estado" 
+        name="estado" 
         label="Estado" 
         type="text"
         value={estado}
@@ -70,6 +74,7 @@ export const DadosEntrega = ({ aoEnviar }) => {
 
       <TextField 
         id="cidade" 
+        name="cidade" 
         label="Cidade" 
         type="text"
         value={cidade}
