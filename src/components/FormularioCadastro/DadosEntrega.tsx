@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { TextField, Button } from '@material-ui/core'
 
-export const DadosEntrega = ({ aoEnviar, validacoes }) => {
+export const DadosEntrega = ({ aoEnviar }) => {
   const [cep, setCep] = useState('')
   const [endereco, setEndereco] = useState('')
   const [numero, setNumero] = useState('')

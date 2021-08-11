@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { TextField, Button } from '@material-ui/core'
+import { ValidacoesCadastro } from 'contexts/ValidacoesCadastro'
 
-export const DadosUsuario = ({ aoEnviar, validacoes }) => {
+export const DadosUsuario = ({ aoEnviar }) => {
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
   const [erros, setErros] = useState({ senha: { valido: true, texto: '' } })
+
+  const validacoes = useContext(ValidacoesCadastro)
   
   const onBlurValidateFields = (event) => {
     const { name, value } = event.target
@@ -16,11 +19,26 @@ export const DadosUsuario = ({ aoEnviar, validacoes }) => {
     setErros(newErrors)
   }
 
+  const handleSubmit = () => {
+    console.log(erros)
+
+    for (let field in erros) {
+      if(!erros[field].valido) return false
+    }
+
+    return true
+  }
+
   return (
-    <form onSubmit={(event) => {
-      event.preventDefault()
-      aoEnviar({email, senha})
-    }}>
+    <form 
+      onSubmit={(event) => {
+        event.preventDefault()
+
+        if (handleSubmit) {
+          aoEnviar({email, senha})
+        }
+      }}
+    >
       <TextField 
         id="email" 
         name="email" 
@@ -59,7 +77,7 @@ export const DadosUsuario = ({ aoEnviar, validacoes }) => {
         variant="contained"
         color="primary"
       >
-        Cadastrar
+        Próximo
       </Button>
     </form>
   )

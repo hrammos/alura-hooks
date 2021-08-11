@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { TextField, Button, Switch, FormControlLabel } from '@material-ui/core'
+import { ValidacoesCadastro } from 'contexts/ValidacoesCadastro'
 
-export const DadosPessoais = ({ aoEnviar, validacoes }) => {
+export const DadosPessoais = ({ aoEnviar }) => {
   const [nome, setNome] = useState('')
   const [sobrenome, setSobrenome] = useState('')
   const [cpf, setCpf] = useState('')
   const [promocoes, setPromocoes] = useState(true)
   const [novidades, setNovidades] = useState(false)
   const [erros, setErros] = useState({ cpf: { valido: true, texto: '' } })
+
+  const validacoes = useContext(ValidacoesCadastro)
   
   const onBlurValidateFields = (event) => {
     const { name, value } = event.target
@@ -18,18 +21,29 @@ export const DadosPessoais = ({ aoEnviar, validacoes }) => {
     
     setErros(newErrors)
   }
+
+  const handleSubmit = () => {
+    for (let field in erros) {
+      if(!erros[field].valido) return false
+    }
+
+    return true
+  }
   
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault()
-        aoEnviar({
-          nome, 
-          sobrenome, 
-          cpf, 
-          novidades, 
-          promocoes,
-        })
+
+        if (handleSubmit) {
+          aoEnviar({
+            nome, 
+            sobrenome, 
+            cpf, 
+            novidades, 
+            promocoes,
+          })
+        }
       }}
     >
       <TextField
@@ -103,8 +117,12 @@ export const DadosPessoais = ({ aoEnviar, validacoes }) => {
         }
       />
 
-      <Button type="submit" variant="contained" color="primary">
-        Cadastrar
+      <Button 
+        type="submit" 
+        variant="contained" 
+        color="primary"
+      >
+        Próximo
       </Button>
     </form>
   )
