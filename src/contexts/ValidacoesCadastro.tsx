@@ -1,3 +1,15 @@
-import React,{ ReactNode, createContext, useContext } from 'react'
+import React, { createContext } from 'react'
 
-export const ValidacoesCadastro = createContext({})
+
+const emptyValidation = (dados) => {
+  console.log(dados)
+
+  return {
+    valido: true,
+    texto: ''
+  }
+}
+
+export const ValidacoesCadastro = createContext(
+  { cpf: emptyValidation, senha: emptyValidation }
+)

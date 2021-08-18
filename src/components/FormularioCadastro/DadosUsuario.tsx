@@ -1,33 +1,15 @@
 import React, { useState, useContext } from 'react'
 import { TextField, Button } from '@material-ui/core'
 import { ValidacoesCadastro } from 'contexts/ValidacoesCadastro'
+import { useErrors } from 'hooks/useErrors'
 
 export const DadosUsuario = ({ aoEnviar }) => {
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
-  const [erros, setErros] = useState({ senha: { valido: true, texto: '' } })
-
+  
   const validacoes = useContext(ValidacoesCadastro)
   
-  const onBlurValidateFields = (event) => {
-    const { name, value } = event.target
-
-    const newErrors = {...erros }
-
-    newErrors[name] = validacoes[name](value)
-    
-    setErros(newErrors)
-  }
-
-  const handleSubmit = () => {
-    console.log(erros)
-
-    for (let field in erros) {
-      if(!erros[field].valido) return false
-    }
-
-    return true
-  }
+  const [errors, validateFields, handleSubmit] = useErrors(validacoes)
 
   return (
     <form 
@@ -64,9 +46,9 @@ export const DadosUsuario = ({ aoEnviar }) => {
         onChange={(event) => {
           setSenha(event.target.value)
         }}
-        onBlur={onBlurValidateFields}
-        error={!erros.senha.valido}
-        helperText={erros.senha.texto}
+        onBlur={validateFields}
+        error={!errors.senha.valido}
+        helperText={errors.senha.texto}
         variant="outlined"
         margin="normal"
         fullWidth

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { TextField, Button, Switch, FormControlLabel } from '@material-ui/core'
 import { ValidacoesCadastro } from 'contexts/ValidacoesCadastro'
+import { useErrors } from 'hooks/useErrors'
 
 export const DadosPessoais = ({ aoEnviar }) => {
   const [nome, setNome] = useState('')
@@ -8,28 +9,12 @@ export const DadosPessoais = ({ aoEnviar }) => {
   const [cpf, setCpf] = useState('')
   const [promocoes, setPromocoes] = useState(true)
   const [novidades, setNovidades] = useState(false)
-  const [erros, setErros] = useState({ cpf: { valido: true, texto: '' } })
+  
 
   const validacoes = useContext(ValidacoesCadastro)
   
-  const onBlurValidateFields = (event) => {
-    const { name, value } = event.target
+  const [errors, validateFields, handleSubmit] = useErrors(validacoes)
 
-    const newErrors = {...erros }
-
-    newErrors[name] = validacoes[name](value)
-    
-    setErros(newErrors)
-  }
-
-  const handleSubmit = () => {
-    for (let field in erros) {
-      if(!erros[field].valido) return false
-    }
-
-    return true
-  }
-  
   return (
     <form
       onSubmit={(event) => {
@@ -78,9 +63,9 @@ export const DadosPessoais = ({ aoEnviar }) => {
           setCpf(event.target.value)
         }}
 
-        onBlur={onBlurValidateFields}
-        error={!erros.cpf.valido}
-        helperText={erros.cpf.texto}
+        onBlur={validateFields}
+        error={!errors.cpf.valido}
+        helperText={errors.cpf.texto}
         id="cpf"
         name="cpf"
         label="CPF"
